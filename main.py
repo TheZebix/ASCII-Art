@@ -1,7 +1,20 @@
 from PIL import Image
+from colorama import just_fix_windows_console, Style
+from termcolor import colored
+just_fix_windows_console()
+
+print(Style.BRIGHT + """
++----------------------------------+
+|                                  |
+|  Welcome in ASCII-Art Converter! |
+|                                  |
++----------------------------------+
+      """)
+
+path = input("Paste img path here (for now it needs to be a .jpg format): ")
 
 # Loading ascii-pineapple.jpg into object
-im = Image.open("ascii-pineapple.jpg")
+im = Image.open(path)
 im = im.resize((400, 400), 4)
 brightnesses_str = list("`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$")
 brightnesses_dict = {}
@@ -31,4 +44,4 @@ if im:
     pixel_brightnesses = [[int(sum(pixel_matrix[j][i]) / 3) for i in range(im.width)] for j in range(im.height)]
     ascii_art = brightnesses_to_ascii(pixel_brightnesses, brightnesses_dict, im)
     for row in ascii_art:
-        print(''.join(row))
+        print(colored(Style.RESET_ALL + colored(f"{''.join(row)}", 'green')))
